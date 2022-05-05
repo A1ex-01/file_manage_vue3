@@ -1,8 +1,17 @@
 import axios from "axios";
 // 创建axios实例
+let baseUrl;
+if (process.env.NODE_ENV == "development") {
+  // 开发环境
+  baseUrl = "/api/";
+}
+if (process.env.NODE_ENV == "production") {
+  // 生成环境
+  baseUrl = "http://121.40.172.208/uploadapi/";
+}
 const ins = axios.create({
   timeout: 20000, // 超时取消
-  baseURL: "http://121.40.172.208/uploadapi/",
+  baseURL: baseUrl,
 });
 // axios拦截器
 ins.interceptors.request.use(

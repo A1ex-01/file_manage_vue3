@@ -23,7 +23,7 @@
     </div>
     <div class="fileshow" v-if="fileList">
       <el-table
-        :data="fileList.rows"
+        :data="tableList"
         style="width: 100%"
         border
         :default-sort="{ prop: 'createDate', order: 'descending' }"
@@ -187,6 +187,7 @@ import {
 } from "@element-plus/icons-vue";
 import { ref, computed } from "@vue/reactivity";
 import { useRouter } from "vue-router";
+import _ from "lodash";
 // 页码
 const page = ref(1);
 // 上传文件dialog状态
@@ -203,10 +204,24 @@ const updateFileInfo = ref<any>({
 });
 // 文件列表
 const fileList = ref<any>(null);
+// 通过页码锁定当前数据
+const tableList = computed(() => {
+  let list = _.cloneDeep(fileList.value.rows);
+  for (const key of list) {
+    filterDate(key.createDate);
+  }
+  list = _.orderBy(list, ["createDate"], ["desc"]);
+  return list.slice(
+    (page.value - 1) * 5,
+    page.value * 5 >= fileList.value.rows.length
+      ? fileList.value?.rows.length
+      : page.value * 5
+  );
+});
 // 初始化获取文件列表
 const getFile = async () => {
   const data = await getAllFile({
-    page: page.value,
+    page: 1,
   });
   if (data.data.code === 200) {
     fileList.value = data.data.data;
@@ -224,7 +239,7 @@ const addr = computed(
 // 权限状态
 const status = ref(getCookie("status") == "true ");
 // 格式化时间
-const filterDate = (val: any) => moment(val).format("YYYY MM DD, HH:mm:ss");
+const filterDate = (val: any) => moment(val).format("YYYY MM DD HH:mm:ss");
 // 转换下载连接
 const getUrl = (val: string | number) =>
   `http://121.40.172.208/uploadapi/static/upload/${val}`;
@@ -258,7 +273,6 @@ const uploadFile = () => {
 };
 // 编辑
 const edit = (item: any) => {
-  console.log(item);
   updateFileInfo.value.id = item.id;
   updateFileInfo.value.filename = item.filename.split(".")[0];
   updateFileInfo.value.author = item.author;
