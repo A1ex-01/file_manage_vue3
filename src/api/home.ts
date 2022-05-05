@@ -7,7 +7,7 @@ function getAllFile(data: any) {
     method: "get",
     data: {
       ...data,
-      limit: 5,
+      limit: 1000,
     },
   });
 }

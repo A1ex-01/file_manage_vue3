@@ -312,7 +312,7 @@ const delFile = (id: string) => {
 // 页面改变
 const handleCurrentChange = (index: number) => {
   page.value = index;
-  getFile();
+  // getFile();
 };
 // 上传成功回调
 const successCall = async () => {
