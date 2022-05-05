@@ -2,7 +2,7 @@ import axios from "axios";
 // 创建axios实例
 const ins = axios.create({
   timeout: 20000, // 超时取消
-  baseURL: "api/",
+  baseURL: "http://121.40.172.208/uploadapi/",
 });
 // axios拦截器
 ins.interceptors.request.use(
