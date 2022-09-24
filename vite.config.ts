@@ -14,11 +14,12 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://121.40.172.208/uploadapi/", //服务端地址
+        target: "http://localhost:8001", //服务端地址
         ws: true,
         changeOrigin: true, // 允许跨域
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
+    port: 8002,
   },
 });

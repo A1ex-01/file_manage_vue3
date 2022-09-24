@@ -10,22 +10,22 @@ const routes: RouteRecordRaw[] = [
     path: "/home",
     name: "Home",
     component: Home,
-    beforeEnter: (to, from, next) => {
-      // reject the navigation
-      if (to.name === "Home") {
-        if (getCookie("status")) {
-          next();
-        } else {
-          next({ path: "/login" });
-        }
-      }
-    },
+    // beforeEnter: (to, from, next) => {
+    //   // reject the navigation
+    //   if (to.name === "Home") {
+    //     if (getCookie("status")) {
+    //       next();
+    //     } else {
+    //       next({ path: "/login" });
+    //     }
+    //   }
+    // },
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/Login.vue"),
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: () => import("../views/Login.vue"),
+  // },
 ];
 const router = createRouter({
   history: createWebHistory(),

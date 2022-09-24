@@ -3,25 +3,13 @@ import request from "../utils/request";
 // 获取所有已上传文件
 function getAllFile(data: any) {
   return request({
-    url: "all",
+    url: "/file",
     method: "get",
-    data: {
-      ...data,
-      limit: 1000,
-    },
+    data,
   });
 }
-function changeFileName(data: any) {
-  return request({
-    url: "update",
-    method: "get",
-    data: data,
-  });
+
+function uploadFileApi(data: any) {
+  return request({ url: "/file", method: "post", data, postType: "file" });
 }
-function deleteFile(id: number | string) {
-  return request({
-    url: "delete?id=" + id,
-    method: "delete",
-  });
-}
-export { getAllFile, changeFileName, deleteFile };
+export { getAllFile, uploadFileApi };

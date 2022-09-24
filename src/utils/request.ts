@@ -7,7 +7,7 @@ if (process.env.NODE_ENV == "development") {
 }
 if (process.env.NODE_ENV == "production") {
   // 生成环境
-  baseUrl = "http://121.40.172.208/uploadapi/";
+  baseUrl = "http://a1ex.vip:8005";
 }
 const ins = axios.create({
   timeout: 20000, // 超时取消
@@ -25,6 +25,10 @@ ins.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+ins.interceptors.response.use((data) => {
+  return data.data;
+});
 
 // 封装数据请求
 export default function request(config: any): any {
